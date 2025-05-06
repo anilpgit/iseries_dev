@@ -1,0 +1,2 @@
+MYTESTCL.MODULE: mytestcl.CLLE
+MYTESTCL.PGM: mytestcl.PGM.CLLE
