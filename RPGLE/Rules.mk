@@ -1,2 +1,0 @@
-MYTESTRPG.MODULE: mytestrpg.rpgle
-UTLPGM.MODULE: UTLPGM.rpgle
