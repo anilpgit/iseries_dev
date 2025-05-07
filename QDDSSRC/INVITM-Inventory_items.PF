@@ -7,7 +7,7 @@
                                             COLHDG('REF' 'SALE' 'PRICE')
                                             EDTCDE(2)
                   ARWHSPR   R               REFFLD(UNITPRICE)
-                                            TEXT('STOCK PRICE')
+                                            TEXT('UNIT PRICE')
                                             COLHDG('STOCK' 'PRICE')
                                             EDTCDE(2)
                   ARTIFA    R               REFFLD(FAID)

@@ -1,8 +1,0 @@
-             
-/********************************************************************/
-/*   Service Program for UTILITY                                    */
-/********************************************************************/
-STRPGMEXP  PGMLVL(*CURRENT) SIGNATURE('UTILITY_1')
-  EXPORT SYMBOL("UTILITY_GETSYSTEMNAME")
-  EXPORT SYMBOL("UTILITY_GETLASTSPOOLEDFILECREATED")
-ENDPGMEXP     

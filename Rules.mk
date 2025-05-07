@@ -1,1 +1,1 @@
-SUBDIRS = QDDSSRC common
+SUBDIRS = common QDDSSRC
