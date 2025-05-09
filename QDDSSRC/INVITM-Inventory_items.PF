@@ -26,7 +26,7 @@
                                             TEXT('PURCHASE ORDER QUANTITY')
                                             COLHDG('PRUCHASE' 'ORDER' 'QTY')
                                             EDTCDE(2)
-                  ARVATCD   R               REFFLD(VATCODE)
+                  ARVATCD   R               REFFLD(HSTCODE)
                   ARCREA          L         TEXT('CREATION DATE')
                                             COLHDG('CREAETION' 'DATE')
                   ARMOD           Z         TEXT('LAST MODIFICATION')

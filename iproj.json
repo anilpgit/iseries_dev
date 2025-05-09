@@ -6,7 +6,8 @@
   "curlib": "&lib",
   "includePath": [
     "includes",
-    "bnddir"
+    "bnddir",
+    "QPROTOSRC"
   ],
   "preUsrlibl": [
     "&lib"
