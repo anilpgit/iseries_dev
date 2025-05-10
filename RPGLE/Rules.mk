@@ -1,1 +1,0 @@
-MYTESTRPG.MODULE: mytestrpg.rpgle

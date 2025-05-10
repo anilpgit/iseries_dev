@@ -1,0 +1,13 @@
+                                            REF(FIELDREF)
+     A          R FHST
+     A            HSTCODE   R
+     A            HSTRATE   R
+     A            HSTDESC       20
+     A            HSTCREA         L         TEXT('CREATION DATE')
+     A                                      COLHDG('CREAETION' 'DATE')
+     A            HSTMOD          Z         TEXT('LAST MODIFICATION')
+     A                                      COLHDG('LAST' 'MODIFICATION')
+     A            HSTMODID      10          TEXT('LAS MOD BY')
+     A                                      COLHDG('LAST' 'MODIF.' 'BY')
+     A            HSTDEL    R               REFFLD(DLCODE)
+     A          K HSTCODE
