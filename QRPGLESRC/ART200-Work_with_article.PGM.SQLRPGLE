@@ -1,16 +1,16 @@
 
-     h dftactgrp(*no) 
+     h dftactgrp(*no) bnddir('SAMPLE')
 
-     finvitmL2  if   e           k disk    rename(finvi:finvi2)
-     finvitml1  uf a e           k disk
-     finv200d   cf   e             workstn
+     farticle2  if   e           k disk    rename(farti:farti2)
+     farticle1  uf a e           k disk
+     fart200d   cf   e             workstn
      F                                     indds(indds)
      F                                     sfile(sfl01:rrn01)
      F                                     Infds(Info)
 
-      /copy family
+      /copy familly
 
-     d providers       pr                  extpgm('INV201')
+     d providers       pr                  extpgm('ART201')
      d  id                                 like(arid)
 
      D indds           ds
@@ -60,17 +60,16 @@
      d act             c                   'act'
       /free
 
-       select ;
-       when panel = 1 ;
-         exsr pnl01 ;
-       when panel = 2 ;
-         exsr pnl02 ;
-       when panel = 3 ;
-         exsr pnl03 ;
-       other ;
-         exsr pnl00 ;
-       endsl ;
-       
+       select;
+       when panel = 1;
+         exsr pnl01;
+       when panel = 2;
+         exsr pnl02;
+       when panel = 3;
+         exsr pnl03;
+       other;
+         exsr pnl00;
+       endsl;
        //- Subfiles  01 Subroutines --------------------------------------  ---
        begsr pnl01;
          select ;
@@ -106,20 +105,20 @@
          RRb01 = RRn01 + 1;
          opt01 = 0;
          count = 0;
-         read invitml2;
-         dow not %eof(invitml2) and count < 14;
+         read article2;
+         dow not %eof(article2) and count < 14;
            RRN01 += 1;
            count += 1;
            write sfl01;
-           read invitml2;
+           read article2;
          enddo;
-         sflend = %eof(invitml1);
+         sflend = %eof(article1);
          step01 = dsp;
          exsr s01sav;
        endsr;
        //--- restore last read -------------------------------------------------
        begsr s01rst;
-         setll (savdesc:savid)  invitml2;
+         setll (savdesc:savid)  article2;
          rrn01 = rrs01;
        endsr;
        //--- Save last read -------------------------------------------------
@@ -204,11 +203,11 @@
            opt01 = 0;
            update sfl01;
          when opt01 = 4;
-           chain arid invitml1;
+           chain arid article1;
            ardel = 'X';
            armod = %timestamp();
            armodid = user;
-           update finvi;
+           update farti;
            step02 = dsp;
            opt01 = 0;
            update sfl01;
@@ -241,13 +240,13 @@
        //--- clear & Load ------------------------------------------------------
        begsr S02prp;
          if mode = crt;
-           setgt *hival invitml1;
-           readp invitml1;
+           setgt *hival article1;
+           readp article1;
            Newid = %dec(arid :6: 0)  +1;
-           reset finvi;
+           reset farti;
            arid = %editc(NewId:'X');
          else;
-           chain arid invitml1;
+           chain arid article1;
            famdesc = getArtFamDesc(artifa);
          endif;
          step02 = dsp;
@@ -293,14 +292,14 @@
          armod = %timestamp();
          armodid = user;
          if mode = upd;
-           update finvi;
+           update farti;
          else;
            arcrea = %date();
-           write(e) finvi;
+           write(e) farti;
            dow %error;
              Newid += 1;
              arid = %editc(NewId:'X');
-             write(e) finvi;
+             write(e) farti;
            enddo;
            savdesc = ardesc;
            savId = arid;
@@ -327,10 +326,10 @@
        endsr;
        //--- clear & Load ------------------------------------------------------
        begsr S03prp;
-         // exec sql set option commit = *none;
-         exec sql select INVITM_INFORMATION into :text
-                  FROM inviinf
-                  WHERE INVITM_INFO_ID = :arid;
+         exec sql set option commit = *none;
+         exec sql select ARTICLE_INFORMATION into :text
+                  FROM artiinf
+                  WHERE ARTICLE_INFO_ID = :arid;
          if sqlcod <> 0;
            mode = crt;
            clear text;
@@ -366,11 +365,11 @@
          step03 = prp;
          panel = 1;
          if mode = upd;
-           exec sql update inviinf
-                  set INVITM_INFORMATION = trim(:text)
-                  WHERE INVITM_INFO_ID = :arid;
+           exec sql update artiinf
+                  set ARTICLE_INFORMATION = trim(:text)
+                  WHERE ARTICLE_INFO_ID = :arid;
          else;
-           exec sql insert into inviinf
+           exec sql insert into artiinf
                     Values(:arid, trim(:text));
          endif;
        endsr;

@@ -7,7 +7,7 @@
   "includePath": [
     "includes",
     "bnddir",
-    "QPROTOSRC"
+    "QPROTOSRC"    
   ],
   "preUsrlibl": [
     "&lib"

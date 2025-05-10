@@ -1,24 +1,26 @@
 
-     h dftactgrp(*no) 
+     h dftactgrp(*no) bnddir('SAMPLE')
 
-     finvitmL2  if   e           k disk    rename(finvi:finvi2)
-     finvitml1  uf a e           k disk
-     finv200d   cf   e             workstn
+     fartiprov  uf a e           k disk
+     fart202d   cf   e             workstn
      F                                     indds(indds)
      F                                     sfile(sfl01:rrn01)
      F                                     Infds(Info)
 
-      /copy family
+      /copy provider
+      /copy article
 
-     d providers       pr                  extpgm('INV201')
-     d  id                                 like(arid)
+     d art202          pr
+     d  prid                               like(apprid)
+
+     d art202          pi
+     d  prid                               like(apprid)
 
      D indds           ds
      D  help                   1      1n
      D  exit                   3      3n
      D  prompt                 4      4n
      D  refresh                5      5n
-     D  Create                 6      6n
      D  cancel                12     12n
      D  morekeys              24     24n
      D  pagedown              25     25n
@@ -42,10 +44,7 @@
      D panel           S              3i 0 INZ(1)
      D step01          S              3    inz(prp)
      D step02          S              3    inz(prp)
-     D step03          S              3    inz(prp)
-     d savId           s                   like(arid)
-     d savDesc         s                   like(ardesc)
-     d NewId           s              6  0
+     d savId           s                   like(prid)
      d User            s             10    inz(*user)
      d count           s              3i 0
      d mode            s              3
@@ -57,20 +56,18 @@
      d dsp             c                   'dsp'
      d key             c                   'key'
      d chk             c                   'chk'
+     d chkctl          c                   'chc'
+     d actctl          c                   'acc'
      d act             c                   'act'
       /free
-
-       select ;
-       when panel = 1 ;
-         exsr pnl01 ;
-       when panel = 2 ;
-         exsr pnl02 ;
-       when panel = 3 ;
-         exsr pnl03 ;
-       other ;
-         exsr pnl00 ;
-       endsl ;
-       
+       select;
+       when panel = 1;
+         exsr pnl01;
+       when panel = 2;
+         exsr pnl02;
+       other;
+         exsr pnl00;
+       endsl;
        //- Subfiles  01 Subroutines --------------------------------------  ---
        begsr pnl01;
          select ;
@@ -94,39 +91,23 @@
          sflclr = *on;
          write ctl01;
          sflclr = *off;
+         provnm = GetProName(prid);
          step01 = lod;
-         clear savid;
-         savDesc = posTo;
-         clear posTo;
-         rrs01 = 0;
        endsr;
        //--- Load Subfile  -----------------------------------------------------
        begsr s01lod;
-         exsr s01rst;
          RRb01 = RRn01 + 1;
          opt01 = 0;
-         count = 0;
-         read invitml2;
-         dow not %eof(invitml2) and count < 14;
+         setll prid artiprov;
+         reade(n) prid artiprov;
+         dow not %eof(artiprov);
+           ardesc = GetArtDesc(aparid);
            RRN01 += 1;
-           count += 1;
            write sfl01;
-           read invitml2;
+           reade(n) prid artiprov;
          enddo;
-         sflend = %eof(invitml1);
+         sflend = *on ;
          step01 = dsp;
-         exsr s01sav;
-       endsr;
-       //--- restore last read -------------------------------------------------
-       begsr s01rst;
-         setll (savdesc:savid)  invitml2;
-         rrn01 = rrs01;
-       endsr;
-       //--- Save last read -------------------------------------------------
-       begsr s01sav;
-         savid = arid;
-         savdesc = ardesc;
-         rrs01 = rrn01;
        endsr;
        //--- Display Subfile  --------------------------------------------------
        begsr s01dsp;
@@ -149,13 +130,6 @@
          when cancel;
            step01 = prp;
            panel  = panel  - 1;
-         when create;
-           step01 = prp;
-           panel  = 2 ;
-           step02 = prp;
-           mode = crt;
-         when pagedown;
-           step01 = lod;
          other;
            step01 = chk;
          endsl;
@@ -167,7 +141,7 @@
          sflnxtchg = *on;
          readc(e) sfl01;
          dow not %error and not %eof;
-           if opt01  > 6 or opt01 = 1 or opt01 = 5;
+           if opt01 <> 0 and opt01 <> 2;
              step01 = dsp;
              dspatr_ri = *on;
              sflmsg = *on;
@@ -187,33 +161,10 @@
          readc(e) sfl01;
          select;
          when %error or %eof;
-           if posto > ' ';
-             step01 = prp;
-           else;
-             step01 = dsp;
-           endif;
+           step01 = dsp;
          when opt01 = 2;
            panel = 2;
            step02 = prp;
-           opt01 = 0;
-           update sfl01;
-           mode = upd;
-         when opt01 = 3;
-           panel = 3;
-           step02 = prp;
-           opt01 = 0;
-           update sfl01;
-         when opt01 = 4;
-           chain arid invitml1;
-           ardel = 'X';
-           armod = %timestamp();
-           armodid = user;
-           update finvi;
-           step02 = dsp;
-           opt01 = 0;
-           update sfl01;
-         when opt01 = 6;
-           providers(arid);
            opt01 = 0;
            update sfl01;
          other;
@@ -240,16 +191,7 @@
        endsr;
        //--- clear & Load ------------------------------------------------------
        begsr S02prp;
-         if mode = crt;
-           setgt *hival invitml1;
-           readp invitml1;
-           Newid = %dec(arid :6: 0)  +1;
-           reset finvi;
-           arid = %editc(NewId:'X');
-         else;
-           chain arid invitml1;
-           famdesc = getArtFamDesc(artifa);
-         endif;
+         chain (prid: aparid) artiprov;
          step02 = dsp;
        endsr;
        //--- Display  ----------------------------------------------------------
@@ -266,10 +208,6 @@
          when cancel;
            step02 = prp;
            panel  = panel  - 1;
-         when prompt;
-           artifa = sltArtFam(artifa);
-           famdesc = getArtFamDesc(artifa);
-           step02 = dsp;
          other;
            step02 = chk;
          endsl;
@@ -277,103 +215,19 @@
        //--- check -------------------------------------------------------------
        begsr S02chk;
          step02 = act;
-         if ardesc = ' ';
-           errDesc = *on;
-           step02 = dsp;
-         endif;
-         if not existArtFam(artifa);
-           errFamilly = *on;
-           step02 = dsp;
-         endif;
 
        endsr;
        //--- Action ------------------------------------------------------------
        begsr S02act;
          step02 = prp;
-         armod = %timestamp();
-         armodid = user;
          if mode = upd;
-           update finvi;
-         else;
-           arcrea = %date();
-           write(e) finvi;
-           dow %error;
-             Newid += 1;
-             arid = %editc(NewId:'X');
-             write(e) finvi;
-           enddo;
-           savdesc = ardesc;
-           savId = arid;
-           step01 = lod;
+           apmod = %timestamp();
+           apmodid = user;
+           update farpr;
          endif;
          panel = 1;
        endsr;
 
-       //--- Format 03 Subroutines ------------------------------------     ---
-       begsr pnl03;
-         select ;
-         when step03 = prp ;
-           exsr s03prp;
-         when step03 = dsp ;
-           exsr s03dsp;
-         when step03 = key ;
-           exsr s03key;
-         when step03 = chk ;
-           exsr s03chk;
-         when step03 = act ;
-           exsr s03act ;
-         endsl;
-
-       endsr;
-       //--- clear & Load ------------------------------------------------------
-       begsr S03prp;
-         // exec sql set option commit = *none;
-         exec sql select INVITM_INFORMATION into :text
-                  FROM inviinf
-                  WHERE INVITM_INFO_ID = :arid;
-         if sqlcod <> 0;
-           mode = crt;
-           clear text;
-         else;
-           mode = upd;
-         endif;
-         step03 = dsp;
-       endsr;
-       //--- Display  ----------------------------------------------------------
-       begsr S03dsp;
-         exfmt fmt03;
-         step03 = key;
-       endsr;
-       //--- command Keys  -----------------------------------------------------
-       begsr S03key;
-         select;
-         when exit;
-           panel  = 1;
-           step03 = prp;
-         when cancel;
-           step03 = prp;
-           panel  = 1;
-         other;
-           step03 = chk;
-         endsl;
-       endsr;
-       //--- check -------------------------------------------------------------
-       begsr S03chk;
-         step03 = act;
-       endsr;
-       //--- Action ------------------------------------------------------------
-       begsr S03act;
-         step03 = prp;
-         panel = 1;
-         if mode = upd;
-           exec sql update inviinf
-                  set INVITM_INFORMATION = trim(:text)
-                  WHERE INVITM_INFO_ID = :arid;
-         else;
-           exec sql insert into inviinf
-                    Values(:arid, trim(:text));
-         endif;
-       endsr;
        //--------INITIALIZATION ----------------------------------
        begsr *inzsr;
        endsr;
