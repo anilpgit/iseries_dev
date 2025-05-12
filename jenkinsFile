@@ -1,20 +1,10 @@
 pipeline {
     agent any
     stages {
-        stage('Git Checkout') {
-            steps {
-                script {
-                    git branch: 'master',
-                        credentialsId: 'iseries-anilpgit-dev-credential',
-                        url: 'https://github.com/anilpgit/iseries_dev.git/'
-                }
-            }
-        }
 
         stage('Save Restore') {
             steps {
                 script {
-                    
                     onIBMi('PUB400') {
                         //Create a SAVF in APINTO12
                         def library = 'APINTO12'
@@ -56,4 +46,3 @@ pipeline {
         }
     }
 }
-
