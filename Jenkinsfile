@@ -11,7 +11,7 @@ pipeline {
 
                 script {
                     /* groovylint-disable-next-line NestedBlockDepth */
-                    onIBMi('PUB400') { // Set the environment variables
+                    onIBMi(server: 'PUB400', traceEnabled: true) { // Set the environment variables
 
                         ibmiCommand 'QSH'
                         ls '/qsys.lib/apinto11.lib'
