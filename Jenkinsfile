@@ -19,7 +19,7 @@ pipeline {
                         echo "Running ${env.BUILD_ID}}"
                         echo "Path ${env.PATH}}"
                         
-                        sh "ls /qsys.lib/qgpl.lib/GEN*.PGM
+                        sh '''ls /qsys.lib/qgpl.lib/GEN*.PGM'''
                        
                         
                     }
