@@ -14,8 +14,8 @@ pipeline {
                     onIBMi('PUB400') { // Set the environment variables
 
                         ibmiCommand 'CALL QP2TERM'
-                        sh '''ls /qsys.lib/apinto11.lib'''
-                        PATH=/QOpenSys/pkgs/bin:$PATH
+                        ls '/qsys.lib/apinto11.lib'
+                        PATH='/QOpenSys/pkgs/bin:$PATH'
                         export PATH
 
                     }
