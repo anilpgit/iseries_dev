@@ -12,16 +12,10 @@ pipeline {
                 script {
                     /* groovylint-disable-next-line NestedBlockDepth */
                     onIBMi('PUB400') { // Set the environment variables
-                        env.ENVIRONMENT = 'DEV'
-                        env.JOB_NAME = 'Jenkinsfile'
-                        env.BUILD_NUMBER = '1'
-                        env.BUILD_ID = '1'
-                        echo "Running ${env.BUILD_ID}}"
-                        echo "Path ${env.PATH}}"
-                        
+
+                        ibmiCommand 'STRQSH'
                         sh '''ls /qsys.lib/qgpl.lib/GEN*.PGM'''
-                       
-                        
+
                     }
                 }
             }
