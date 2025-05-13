@@ -16,7 +16,7 @@ pipeline {
                         env.JOB_NAME = 'Jenkinsfile'
                         env.BUILD_NUMBER = '1'
                         env.BUILD_ID = '1'
-                        PATH=/QOpenSys/pkgs/bin:$PATH
+                        PATH=/QOpenSys/pkgs/bin
                         //env.WORKSPACE = '/home/jenkins/workspace'
                         //env.JENKINS_HOME = '/var/lib/jenkins'
                         //env.JENKINS_URL = 'http://localhost:8080'
