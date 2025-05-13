@@ -1,4 +1,4 @@
-
+  **FRee  
      h dftactgrp(*no) bnddir('SAMPLE')
 
      farticle2  if   e           k disk    rename(farti:farti2)

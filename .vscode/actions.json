@@ -1,0 +1,16 @@
+[
+    {   "name": "Deploy and Build",
+        "title": "Deploy and Build",
+        "description": "Get Source from GIT, Compile and Deploy  to iSeries",
+        "environment": "pase",
+        "extensions": [
+            "GLOBAL"
+        ],
+        "deployFirst": true,
+        "command": "/QOpenSys/pkgs/bin/gmake BIN_LIB=&CURLIB OPTS=*EVENTF",
+        "args": {
+            "text": "python3 ${file}\u000D"
+        },
+        "when": "editorTextFocus && editorLangId == 'python'"
+    }
+]
