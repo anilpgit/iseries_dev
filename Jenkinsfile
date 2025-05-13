@@ -18,9 +18,9 @@ pipeline {
                         env.BUILD_ID = '1'
                         echo "Running ${env.BUILD_ID}}"
                         echo "Path ${env.PATH}}"
-                        withEnv(['MYTOOL_HOME=/Qopensys/pkgs/bin']) {
-                            sh '$MYTOOL_HOME/makei build'
-                        }
+                        sh "pwd /Qopensys/pkgs/bin"
+                        sh 'makei build'
+                        
                     }
                 }
             }
