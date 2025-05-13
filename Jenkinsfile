@@ -8,6 +8,19 @@ pipeline {
                 sh '''#!/bin/bash
                  echo "hello world"
          '''
+                sh '''makei build'''
+                script {
+                    // Set the environment variables
+                    env.ENVIRONMENT = 'DEV'
+                    env.JOB_NAME = 'Jenkinsfile'
+                    env.BUILD_NUMBER = '1'
+                    env.BUILD_ID = '1'
+                    env.WORKSPACE = '/home/jenkins/workspace'
+                    env.JENKINS_HOME = '/var/lib/jenkins'
+                    env.JENKINS_URL = 'http://localhost:8080'
+                    env.JOB_URL = "${env.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/"
+                }
+                
             }
         }
         stage('Save Restore') {
