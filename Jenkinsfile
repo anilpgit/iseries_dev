@@ -14,7 +14,7 @@ pipeline {
                     onIBMi('PUB400') { // Set the environment variables
 
                         ibmiCommand 'STRQSH'
-                        sh '''ls /qsys.lib/qgpl.lib/GEN*.PGM'''
+                        sh '''ls /qsys.lib/apinto11.lib'''
 
                     }
                 }
