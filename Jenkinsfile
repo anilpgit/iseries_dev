@@ -23,7 +23,7 @@ pipeline {
                         //env.JOB_URL = "${env.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/"
                         echo "Running ${env.BUILD_ID}}"
                         echo "Path ${env.PATH}}"
-                        sh '''/Qopensys/pkgs/bin/bash
+                        sh "sh /Qopensys/pkgs/bin/bash
                         makei build
                         '''
                     }
