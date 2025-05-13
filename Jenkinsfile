@@ -13,8 +13,10 @@ pipeline {
                     /* groovylint-disable-next-line NestedBlockDepth */
                     onIBMi('PUB400') { // Set the environment variables
 
-                        ibmiCommand 'STRQSH'
+                        ibmiCommand 'CALL QP2TERM'
                         sh '''ls /qsys.lib/apinto11.lib'''
+                        PATH=/QOpenSys/pkgs/bin:$PATH
+                        export PATH
 
                     }
                 }
