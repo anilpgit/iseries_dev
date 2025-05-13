@@ -49,6 +49,7 @@
      d User            s             10    inz(*user)
      d count           s              3i 0
      d mode            s              3
+     d testvar         s              3
 
      d crt             c                   'CRT'
      d upd             c                   'UPD'

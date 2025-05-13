@@ -1,5 +1,15 @@
 [
-    {   "name": "Deploy and Build",
+    {
+        "name": "Deploy & build with ibmi-bob 🔨",
+        "command": "error=*EVENTF lib1=&BRANCHLIB makei build",
+        "extensions": [
+            "GLOBAL"
+        ],
+        "environment": "pase",
+        "deployFirst": true
+    },
+    {
+        "name": "Deploy and Build gnu make",
         "title": "Deploy and Build",
         "description": "Get Source from GIT, Compile and Deploy  to iSeries",
         "environment": "pase",
