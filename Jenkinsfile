@@ -20,8 +20,9 @@ pipeline {
                         env.JENKINS_URL = 'http://localhost:8080'
                         env.JOB_URL = "${env.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/"
                         echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
-                        sh '''#!/bin/bash
-                        sh '''makei build'''
+                        sh '''/Qopensys/pkgs/bin/bash
+                        makei build
+                        '''
                     }
                 }
             }
