@@ -18,9 +18,9 @@ pipeline {
                         env.BUILD_ID = '1'
                         echo "Running ${env.BUILD_ID}}"
                         echo "Path ${env.PATH}}"
-                        sh "pwd /Qopensys/pkgs/bin"
-                        sh "ls -l /Qopensys/pkgs/bin"
-                        sh 'makei build'
+                        
+                        sh "ls /qsys.lib/qgpl.lib/GEN*.PGM
+                       
                         
                     }
                 }
