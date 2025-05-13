@@ -16,11 +16,11 @@ pipeline {
                         env.JOB_NAME = 'Jenkinsfile'
                         env.BUILD_NUMBER = '1'
                         env.BUILD_ID = '1'
-                        env.WORKSPACE = '/home/jenkins/workspace'
-                        env.JENKINS_HOME = '/var/lib/jenkins'
-                        env.JENKINS_URL = 'http://localhost:8080'
-                        env.JOB_URL = "${env.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/"
-                        echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                        //env.WORKSPACE = '/home/jenkins/workspace'
+                        //env.JENKINS_HOME = '/var/lib/jenkins'
+                        //env.JENKINS_URL = 'http://localhost:8080'
+                        //env.JOB_URL = "${env.JENKINS_URL}/job/${env.JOB_NAME}/${env.BUILD_NUMBER}/"
+                        echo "Running ${env.BUILD_ID}}"
                         sh '''/Qopensys/pkgs/bin/bash
                         makei build
                         '''
