@@ -10,6 +10,7 @@ pipeline {
          '''
 
                 script {
+                    /* groovylint-disable-next-line NestedBlockDepth */
                     onIBMi('PUB400') { // Set the environment variables
                         env.ENVIRONMENT = 'DEV'
                         env.JOB_NAME = 'Jenkinsfile'
@@ -30,6 +31,7 @@ pipeline {
         stage('Save Restore') {
             steps {
                 script {
+                    /* groovylint-disable-next-line NestedBlockDepth */
                     onIBMi('PUB400') {
                         //Create a SAVF in APINTO12
                         def library = 'APINTO12'
