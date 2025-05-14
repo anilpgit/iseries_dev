@@ -1,66 +1,49 @@
 //Jenkinsfile
 
+/* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent any
     stages {
-        stage('Setting the variables values') {
+        def library = 'APINTO12'
+        def savFile = 'RELEASE1'
+
+        stage('CRTSAVF') {
             steps {
-                sh '''#!/bin/bash
-                 echo "hello world"
-         '''
-
                 script {
-                    /* groovylint-disable-next-line NestedBlockDepth */
-                    onIBMi(server: 'PUB400', traceEnabled: true) { // Set the environment variables
+                    echo 'Creating SAVF'
+                    onIBMi('PUB400') {
+                        // Create a SAVF in APINTO12
+                        ibmiCommand "DLTF FILE($library/$savFile)"
 
-                        ibmiCommand 'QSH'
-                    //ls '/qsys.lib/apinto11.lib'
-                    //PATH = '/QOpenSys/pkgs/bin:$PATH'
-                    //export PATH
+                        // Create a library and carry on only if it exists
+                        def result = ibmiCommand(
+                            command: "CRTSAVF FILE($library/$savFile) TEXT('Backup before build ')",
+                            failOnError: false
+                        )
+
+                        // Flattened logic to reduce nesting
+                        if (result.successful) {
+                            echo " $library created"
+                            return
+                        }
+                        if (result.getMessage('CPF2111') != null) {
+                            echo " $library already exists"
+                            echo " $savFile already exists"
+                            return
+                        }
+                        // Any other error is reported and stops the pipeline
+                        error result.getPrettyMessages
                     }
                 }
             }
         }
-        stage('Save Restore') {
+        stage('SAVEF') {
             steps {
                 script {
-                    /* groovylint-disable-next-line NestedBlockDepth */
+                    echo 'Saving objects to SAVF'
+
                     onIBMi('PUB400') {
                         //Create a SAVF in APINTO12
-                        def library = 'APINTO12'
-                        def savFile = 'RELEASE1'
-                        ibmiCommand "DLTF FILE($library/$savFile)"
-                        //ibmiCommand "CRTSAVF QTEMP/BACKUP"
-                        //ibmiCommand "SAVLIB LIB(ECTO1) DEV(*SAVF) SAVF(QTEMP/BACKUP)"
-                        //ibmiGetSAVF library: "QTEMP", name: "BACKUP", toFile: "ecto1.savf"
-
-                        //Create a library and carry on only if it exists
-                        def result = ibmiCommand(
-                    command: "CRTSAVF FILE($library/$savFile) TEXT('Backup before build ')",
-                    failOnError: false)
-                        // Check if the library already exists
-                        if (result.successful) {
-                            echo " $library created"
-                    } else {
-                            // Check if the library already exists
-                            if (result.getMessage('CPF2111') != null) {
-                                echo " $library already exists"
-                        } else {
-                                // Any other error is reported and stops the pipeline
-                                error result.getPrettyMessages()
-                            }
-                        }
-
-                        // Handle result outside the deepest block to reduce nesting
-                        if (!result.successful) {
-                            if (result.getMessage('CPF2111') != null) {
-                                echo " $savFile already exists"
-                    } else {
-                                //Any other error is reported and stops the pipeline
-                                error result.getPrettyMessages()
-                            }
-                        }
-
                         def result2 = ibmiCommand(
                             command: 'SAVLIB LIB(APINTO11) DEV(*SAVF) ' +
                                      'SAVF(APINTO12/RELEASE1) ' +
@@ -79,7 +62,6 @@ pipeline {
                         print "SAVF file contains ${savfContent.entries.size()} object(s)"
                         print "${savfContent.entries.size} object(s) saved"
                         //Print each saved object
-                        savfContent.entries.each { entry -> print "  - ${entry.name} (${entry.type})" }
 
                         //Put savf to IFS /home/APinto1/release1.savf
                         def result3 = ibmiPutSAVF(
@@ -88,6 +70,28 @@ pipeline {
                             fromFile: 'release1.savf',
                             toPath: '/home/APinto1/release1.savf',
                             failOnError: false)
+                        if (result3.successful) {
+                            echo ' Content Put OK'
+                            return
+                        }
+                        if (result3.getMessage('CPF2111') != null) {
+                            echo ' Content Put Not OK'
+                            return
+                        }
+                        // Any other error is reported and stops the pipeline
+                        error result3.getPrettyMessages
+                    //RSTLIB command not allowed on PUB400
+                    }
+                }
+            }
+            stage('Build') {
+                steps {
+                    script {
+                    /* groovylint-disable-next-line NestedBlockDepth */
+                        onIBMi('PUB400') {
+                            //Run the build command
+                            ibmiCommand 'CALL PGM(APINTO11/BUILD)'
+                        }
                     }
                 }
             }
