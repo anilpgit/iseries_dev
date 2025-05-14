@@ -71,16 +71,7 @@ pipeline {
                             fromFile: 'release1.savf',
                             toPath: '/home/APinto1/release1.savf',
                             failOnError: false)
-                        if (result3.successful) {
-                            echo ' Content Put OK'
-                            return
-                        }
-                        if (result3.getMessage('CPF2111') != null) {
-                            echo ' Content Put Not OK'
-                            return
-                        }
-                        // Any other error is reported and stops the pipeline
-                        error result3.getPrettyMessages
+                       
                     //RSTLIB command not allowed on PUB400
                     }
                 }
