@@ -4,7 +4,6 @@
 pipeline {
     agent any
     stages {
-        
         stage('CRTSAVF') {
             steps {
                 script {
@@ -106,9 +105,11 @@ pipeline {
                 }
             }
             stage('Deliver') {
+                steps {
                     script {
                     echo 'Delivering'
                     }
+                }
             }
             stage('Publish') {
                 steps {
