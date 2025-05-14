@@ -98,26 +98,22 @@ pipeline {
             stage('TEST') {
                 steps {
                     script {
-                    echo 'Running tests'
-                    
+                        echo 'Running tests'
                     }
                 }
             }
             stage('Deliver') {
                     script {
                     echo 'Delivering'
-                    
                     }
-                }
             }
+        }
             stage('Deploy') {
                 steps {
                     script {
                     echo 'Deploying'
-                    
                     }
                 }
             }
-        }
     }
 }
