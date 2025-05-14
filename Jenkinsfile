@@ -15,9 +15,8 @@ pipeline {
 
                         ibmiCommand 'QSH'
                         ls '/qsys.lib/apinto11.lib'
-                        PATH='/QOpenSys/pkgs/bin:$PATH'
+                        PATH = '/QOpenSys/pkgs/bin:$PATH'
                         export PATH
-
                     }
                 }
             }
@@ -36,17 +35,27 @@ pipeline {
             //ibmiGetSAVF library: "QTEMP", name: "BACKUP", toFile: "ecto1.savf"
 
                         //Create a library and carry on only if it exists
-                        def result = ibmiCommand(command: "CRTSAVF FILE($library/$savFile) TEXT('Backup before build ')", failOnError: false)
-                        if (!result.successful) {
-                            if (result.getMessage('CPF2111') != null) {
-                                echo " $savFile already exists"
-    } else {
-                                //Any other error is reported and stops the pipeline
-                                error result.getPrettyMessages()
-                            }
+                        def result = ibmiCommand(
+            command: "CRTSAVF FILE($library/$savFile) TEXT('Backup before build ')",
+            failOnError: false
+        )
+                    }
+                    // Handle result outside the deepest block to reduce nesting
+                    if (!result.successful) {
+                        if (result.getMessage('CPF2111') != null) {
+                            echo " $savFile already exists"
+        } else {
+                            //Any other error is reported and stops the pipeline
+                            error result.getPrettyMessages()
                         }
+                    }
 
-                        def result2 = ibmiCommand(command: 'SAVLIB LIB(APINTO11) DEV(*SAVF) SAVF(APINTO12/RELEASE1) OMITOBJ(APINTO11/Q*)', failOnError:false)
+                        def result2 = ibmiCommand(
+                            command: 'SAVLIB LIB(APINTO11) DEV(*SAVF) ' +
+                                     'SAVF(APINTO12/RELEASE1) ' +
+                                     'OMITOBJ(APINTO11/Q*)',
+                            failOnError: false
+                        )
                         def savfContent = ibmiGetSAVF(library: 'APINTO12', name: 'RELEASE1', toFile: 'release1.savf')
                         //Check if the SAVF file exists
                         if (savfContent == null) {
@@ -61,9 +70,9 @@ pipeline {
                         print "${savfContent.entries.size} object(s) saved"
                         //Print each saved object
                         savfContent.entries.each { entry -> print "  - ${entry.name} (${entry.type})" }
-                    }
                 }
             }
         }
     }
 }
+
