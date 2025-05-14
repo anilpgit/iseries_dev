@@ -1,4 +1,4 @@
-
+  **FRee  
      h dftactgrp(*no) bnddir('SAMPLE')
 
      farticle2  if   e           k disk    rename(farti:farti2)
@@ -49,6 +49,7 @@
      d User            s             10    inz(*user)
      d count           s              3i 0
      d mode            s              3
+     d testvar         s              3
 
      d crt             c                   'CRT'
      d upd             c                   'UPD'

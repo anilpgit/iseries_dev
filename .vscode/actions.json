@@ -1,0 +1,26 @@
+[
+    {
+        "name": "Deploy & build with ibmi-bob 🔨",
+        "command": "error=*EVENTF lib1=&BRANCHLIB makei build",
+        "extensions": [
+            "GLOBAL"
+        ],
+        "environment": "pase",
+        "deployFirst": true
+    },
+    {
+        "name": "Deploy and Build gnu make",
+        "title": "Deploy and Build",
+        "description": "Get Source from GIT, Compile and Deploy  to iSeries",
+        "environment": "pase",
+        "extensions": [
+            "GLOBAL"
+        ],
+        "deployFirst": true,
+        "command": "/QOpenSys/pkgs/bin/gmake BIN_LIB=&CURLIB OPTS=*EVENTF",
+        "args": {
+            "text": "python3 ${file}\u000D"
+        },
+        "when": "editorTextFocus && editorLangId == 'python'"
+    }
+]
