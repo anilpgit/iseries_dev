@@ -4,14 +4,15 @@
 pipeline {
     agent any
     stages {
-        def library = 'APINTO12'
-        def savFile = 'RELEASE1'
-
+        
         stage('CRTSAVF') {
             steps {
                 script {
                     echo 'Creating SAVF'
                     onIBMi('PUB400') {
+                        def library = 'APINTO12'
+                        def savFile = 'RELEASE1'
+
                         // Create a SAVF in APINTO12
                         ibmiCommand "DLTF FILE($library/$savFile)"
 
@@ -59,6 +60,7 @@ pipeline {
                             error 'SAVF file is empty'
                         }
                         //Print the number of objects in the SAVF file
+                        /* groovylint-disable-next-line NestedBlockDepth */
                         print "SAVF file contains ${savfContent.entries.size()} object(s)"
                         print "${savfContent.entries.size} object(s) saved"
                         //Print each saved object
@@ -84,6 +86,7 @@ pipeline {
                     }
                 }
             }
+        }
             stage('Build') {
                 steps {
                     script {
@@ -107,7 +110,13 @@ pipeline {
                     echo 'Delivering'
                     }
             }
-        }
+            stage('Publish') {
+                steps {
+                    script {
+                    echo 'Publishing'
+                    }
+                }
+            }
             stage('Deploy') {
                 steps {
                     script {
