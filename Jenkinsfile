@@ -14,9 +14,9 @@ pipeline {
                     onIBMi(server: 'PUB400', traceEnabled: true) { // Set the environment variables
 
                         ibmiCommand 'QSH'
-                        //ls '/qsys.lib/apinto11.lib'
-                        //PATH = '/QOpenSys/pkgs/bin:$PATH'
-                        //export PATH
+                    //ls '/qsys.lib/apinto11.lib'
+                    //PATH = '/QOpenSys/pkgs/bin:$PATH'
+                    //export PATH
                     }
                 }
             }
@@ -30,21 +30,32 @@ pipeline {
                         def library = 'APINTO12'
                         def savFile = 'RELEASE1'
                         ibmiCommand "DLTF FILE($library/$savFile)"
-            //ibmiCommand "CRTSAVF QTEMP/BACKUP"
-            //ibmiCommand "SAVLIB LIB(ECTO1) DEV(*SAVF) SAVF(QTEMP/BACKUP)"
-            //ibmiGetSAVF library: "QTEMP", name: "BACKUP", toFile: "ecto1.savf"
+                        //ibmiCommand "CRTSAVF QTEMP/BACKUP"
+                        //ibmiCommand "SAVLIB LIB(ECTO1) DEV(*SAVF) SAVF(QTEMP/BACKUP)"
+                        //ibmiGetSAVF library: "QTEMP", name: "BACKUP", toFile: "ecto1.savf"
 
                         //Create a library and carry on only if it exists
                         def result = ibmiCommand(
-            command: "CRTSAVF FILE($library/$savFile) TEXT('Backup before build ')",
-            failOnError: false
-        )
-                    }
+                        command: "CRTSAVF FILE($library/$savFile) TEXT('Backup before build ')",
+                        failOnError: false)
+                        // Check if the library already exists
+                        if (result.successful) {
+                            echo " $library created"
+                        } else {
+                            // Check if the library already exists
+                            if (result.getMessage('CPF2111') != null) {
+                                echo " $library already exists"
+                            } else {
+                                // Any other error is reported and stops the pipeline
+                                error result.getPrettyMessages()
+                            }
+                        }
+
                     // Handle result outside the deepest block to reduce nesting
                     if (!result.successful) {
                         if (result.getMessage('CPF2111') != null) {
                             echo " $savFile already exists"
-        } else {
+                    } else {
                             //Any other error is reported and stops the pipeline
                             error result.getPrettyMessages()
                         }
@@ -54,8 +65,7 @@ pipeline {
                             command: 'SAVLIB LIB(APINTO11) DEV(*SAVF) ' +
                                      'SAVF(APINTO12/RELEASE1) ' +
                                      'OMITOBJ(APINTO11/Q*)',
-                            failOnError: false
-                        )
+                            failOnError: false)
                         def savfContent = ibmiGetSAVF(library: 'APINTO12', name: 'RELEASE1', toFile: 'release1.savf')
                         //Check if the SAVF file exists
                         if (savfContent == null) {
@@ -70,9 +80,9 @@ pipeline {
                         print "${savfContent.entries.size} object(s) saved"
                         //Print each saved object
                         savfContent.entries.each { entry -> print "  - ${entry.name} (${entry.type})" }
+                    }
                 }
             }
         }
     }
-}
 
