@@ -13,7 +13,7 @@ pipeline {
                         def savFile = 'RELEASE1'
 
                         // Create a SAVF in APINTO12
-                        ibmiCommand "DLTF FILE($library/$savFile)"
+                        //ibmiCommand "DLTF FILE($library/$savFile)"
 
                         // Create a library and carry on only if it exists
                         def result = ibmiCommand(
