@@ -36,30 +36,30 @@ pipeline {
 
                         //Create a library and carry on only if it exists
                         def result = ibmiCommand(
-                        command: "CRTSAVF FILE($library/$savFile) TEXT('Backup before build ')",
-                        failOnError: false)
+                    command: "CRTSAVF FILE($library/$savFile) TEXT('Backup before build ')",
+                    failOnError: false)
                         // Check if the library already exists
                         if (result.successful) {
                             echo " $library created"
-                        } else {
+                    } else {
                             // Check if the library already exists
                             if (result.getMessage('CPF2111') != null) {
                                 echo " $library already exists"
-                            } else {
+                        } else {
                                 // Any other error is reported and stops the pipeline
                                 error result.getPrettyMessages()
                             }
                         }
 
-                    // Handle result outside the deepest block to reduce nesting
-                    if (!result.successful) {
-                        if (result.getMessage('CPF2111') != null) {
-                            echo " $savFile already exists"
+                        // Handle result outside the deepest block to reduce nesting
+                        if (!result.successful) {
+                            if (result.getMessage('CPF2111') != null) {
+                                echo " $savFile already exists"
                     } else {
-                            //Any other error is reported and stops the pipeline
-                            error result.getPrettyMessages()
+                                //Any other error is reported and stops the pipeline
+                                error result.getPrettyMessages()
+                            }
                         }
-                    }
 
                         def result2 = ibmiCommand(
                             command: 'SAVLIB LIB(APINTO11) DEV(*SAVF) ' +
@@ -80,6 +80,14 @@ pipeline {
                         print "${savfContent.entries.size} object(s) saved"
                         //Print each saved object
                         savfContent.entries.each { entry -> print "  - ${entry.name} (${entry.type})" }
+
+                        //Put savf to IFS /home/APinto1/release1.savf
+                        def result3 = ibmiPutSAVF(
+                            library: 'APINTO12',
+                            name: 'RELEASE1',
+                            fromFile: 'release1.savf',
+                            toPath: '/home/APinto1/release1.savf',
+                            failOnError: false)
                     }
                 }
             }
