@@ -14,9 +14,9 @@ pipeline {
                     onIBMi(server: 'PUB400', traceEnabled: true) { // Set the environment variables
 
                         ibmiCommand 'QSH'
-                        ls '/qsys.lib/apinto11.lib'
-                        PATH = '/QOpenSys/pkgs/bin:$PATH'
-                        export PATH
+                        //ls '/qsys.lib/apinto11.lib'
+                        //PATH = '/QOpenSys/pkgs/bin:$PATH'
+                        //export PATH
                     }
                 }
             }
