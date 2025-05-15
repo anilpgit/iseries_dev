@@ -6,7 +6,8 @@ pipeline {
     stages {
         stage ("info") {
             when {
-		        changeRequest()
+		        //changeRequest()
+                branch pattern: "iseries_\\d+", comparator: "REGEXP"
 			}
 			steps {
 				powershell 'gci env:\\ | ft name,value -autosize'
