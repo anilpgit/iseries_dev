@@ -16,8 +16,10 @@ pipeline {
                 // add a ref to git config to make it aware of master
                 powershell '& git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main'
 				
+                powershell  '& git config --list'
                 // now fetch master so you can do a diff against it 
-                powershell '& git fetch --no-tags'
+                //powershell '& git fetch --no-tags'
+                powershell '& git fetch origin main:refs/remotes/origin/main'
 				echo    'Fetching main'
                 // get the branch name from the environment variable
                 //def branchName = env.BRANCH_NAME
