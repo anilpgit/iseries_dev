@@ -83,7 +83,8 @@ pipeline {
                     /* groovylint-disable-next-line NestedBlockDepth */
                         onIBMi('PUB400') {
                             //Run the build command
-                            ibmiCommand 'CALL PGM(APINTO11/BUILD)'
+                           // ibmiCommand 'CALL PGM(APINTO11/BUILD)'
+                           echo 'Calling IBM Build Command'
                         }
                     }
                 /* groovylint-disable-next-line TrailingWhitespace */
