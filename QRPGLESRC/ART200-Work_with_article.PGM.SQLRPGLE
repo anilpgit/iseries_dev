@@ -222,7 +222,7 @@
        endsr;
 
 
-       //--- Format 02 Subroutines ------------------------------------     ---
+      //--- Format 02 Subroutines ------------------------------------     ---
        begsr pnl02;
          select ;
          when step02 = prp ;
