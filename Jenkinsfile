@@ -21,6 +21,8 @@ pipeline {
                 //powershell '& git fetch --no-tags'
                 powershell '& git add -A'
                 powershell '& git fetch origin main:refs/remotes/origin/main'
+                //powershell '& git fetch origin dev_Project1:refs/remotes/origin/dev_Project1'
+
 				echo    'Fetching main'
                 // get the branch name from the environment variable
                 //def branchName = env.BRANCH_NAME
@@ -30,7 +32,7 @@ pipeline {
 
                 // do the diff and set some variable based on the result
                 powershell '''  
-					$DiffToMaster = & git diff --name-only main..$env:BRANCH_NAME
+					$DiffToMaster = & git diff --name-only main:refs/remotes/origin/main..dev_Project1:refs/remotes/origin/dev_Project1
 					Switch ($DiffToMaster) {
 						'server-1607/base.json' {$env:PACK_BASE = $true}
 						'server-1607/basic.json' {$env:PACK_BASIC = $true}
