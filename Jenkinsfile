@@ -81,7 +81,7 @@ pipeline {
                                      'OMITOBJ(APINTO11/Q*)',
                             failOnError: false)
                         def savfContent = ibmiGetSAVF(library: 'APINTO12', name: 'RELEASE1', toFile: 'release1.savf')
-                    }
+                    
                         //Check if the SAVF file exists
                         if (savfContent == null) {
                             error 'SAVF file not found'
@@ -103,7 +103,7 @@ pipeline {
                             toPath: '/home/APinto1/release1.savf',
                             failOnError: false
                         )
-
+                }
                 //RSTLIB command not allowed on PUB400
                 }
             }
