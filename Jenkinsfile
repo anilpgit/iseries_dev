@@ -24,10 +24,12 @@ pipeline {
                 // get the branch name from the environment variable
                 //def branchName = env.BRANCH_NAME
                 //echo "Branch name: ${branchName}"
+                
+                powershell '& git status'
 
                 // do the diff and set some variable based on the result
-                powershell '''
-					$DiffToMaster = & git diff --name-only origin/main.origin/$env:BRANCH_NAME
+                powershell '''  
+					$DiffToMaster = & git diff --name-only origin/main HEAD..origin/$env:BRANCH_NAME
 					Switch ($DiffToMaster) {
 						'server-1607/base.json' {$env:PACK_BASE = $true}
 						'server-1607/basic.json' {$env:PACK_BASIC = $true}
