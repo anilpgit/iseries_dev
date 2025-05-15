@@ -19,6 +19,7 @@ pipeline {
                 powershell  '& git config --list'
                 // now fetch master so you can do a diff against it 
                 //powershell '& git fetch --no-tags'
+                powershell '& git add -A'
                 powershell '& git fetch origin main:refs/remotes/origin/main'
 				echo    'Fetching main'
                 // get the branch name from the environment variable
