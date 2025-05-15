@@ -30,7 +30,7 @@ pipeline {
 					gci env:/PACK_*
 				'''
 			}
-		}
+        }
         stage('CRTSAVF') {
             steps {
                 script {
@@ -104,7 +104,7 @@ pipeline {
                 }
             }
         }
-    }
+    
             stage('Build') {
                 steps {
                     script {
@@ -147,4 +147,4 @@ pipeline {
                 }
             }
 }
-
+}
