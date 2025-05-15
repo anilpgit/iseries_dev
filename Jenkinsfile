@@ -5,11 +5,11 @@ pipeline {
     agent any
     stages {
         stage ("info") {
-            when {
+            //when {
 		        //changeRequest()
                 //branch pattern: "dev_\\d+", comparator: "REGEXP"
-                anyOf { branch 'main'; branch 'dev_Project1' } 
-			}
+              //  anyOf { branch 'main'; branch 'dev_Project1' } 
+			//}
 			steps {
 				powershell 'gci env:\\ | ft name,value -autosize'
 				
