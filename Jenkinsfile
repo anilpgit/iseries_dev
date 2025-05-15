@@ -50,6 +50,7 @@ pipeline {
                                      'OMITOBJ(APINTO11/Q*)',
                             failOnError: false)
                         def savfContent = ibmiGetSAVF(library: 'APINTO12', name: 'RELEASE1', toFile: 'release1.savf')
+                    }
                         //Check if the SAVF file exists
                         if (savfContent == null) {
                             error 'SAVF file not found'
@@ -59,32 +60,32 @@ pipeline {
                             error 'SAVF file is empty'
                         }
                         //Print the number of objects in the SAVF file
-                        /* groovylint-disable-next-line NestedBlockDepth */
                         print "SAVF file contains ${savfContent.entries.size()} object(s)"
                         print "${savfContent.entries.size} object(s) saved"
                         //Print each saved object
 
                         //Put savf to IFS /home/APinto1/release1.savf
-                        def result3 = ibmiPutSAVF(
+                        ibmiPutSAVF(
                             library: 'APINTO12',
                             name: 'RELEASE1',
                             fromFile: 'release1.savf',
                             toPath: '/home/APinto1/release1.savf',
-                            failOnError: false)
+                            failOnError: false
+                        )
 
-                    //RSTLIB command not allowed on PUB400
-                    }
+                //RSTLIB command not allowed on PUB400
                 }
             }
         }
+    }
             stage('Build') {
                 steps {
                     script {
                     /* groovylint-disable-next-line NestedBlockDepth */
                         onIBMi('PUB400') {
-                            //Run the build command
-                           // ibmiCommand 'CALL PGM(APINTO11/BUILD)'
-                           echo 'Calling IBM Build Command'
+                        //Run the build command
+                        // ibmiCommand 'CALL PGM(APINTO11/BUILD)'
+                        echo 'Calling IBM Build Command'
                         }
                     }
                 /* groovylint-disable-next-line TrailingWhitespace */
@@ -118,5 +119,5 @@ pipeline {
                     }
                 }
             }
-    }
+}
 }
