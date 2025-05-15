@@ -14,18 +14,18 @@ pipeline {
 				powershell 'gci env:\\ | ft name,value -autosize'
 				
                 // add a ref to git config to make it aware of master
-                powershell '& git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master'
+                powershell '& git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main'
 				
                 // now fetch master so you can do a diff against it 
                 powershell '& git fetch --no-tags'
-				echo    'Fetching master'
+				echo    'Fetching main'
                 // get the branch name from the environment variable
                 //def branchName = env.BRANCH_NAME
                 //echo "Branch name: ${branchName}"
 
                 // do the diff and set some variable based on the result
                 powershell '''
-					$DiffToMaster = & git diff --name-only origin/master..origin/$env:BRANCH_NAME
+					$DiffToMaster = & git diff --name-only origin/main..origin/$env:BRANCH_NAME
 					Switch ($DiffToMaster) {
 						'server-1607/base.json' {$env:PACK_BASE = $true}
 						'server-1607/basic.json' {$env:PACK_BASIC = $true}
