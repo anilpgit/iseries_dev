@@ -13,7 +13,7 @@ pipeline {
                         def savFile = 'RELEASE1'
 
                         // Create a SAVF in APINTO12
-                        //ibmiCommand "DLTF FILE($library/$savFile)"
+                        ibmiCommand "DLTF FILE($library/$savFile)"
 
                         // Create a library and carry on only if it exists
                         def result = ibmiCommand(
@@ -71,7 +71,7 @@ pipeline {
                             fromFile: 'release1.savf',
                             toPath: '/home/APinto1/release1.savf',
                             failOnError: false)
-                       
+
                     //RSTLIB command not allowed on PUB400
                     }
                 }
@@ -86,6 +86,7 @@ pipeline {
                             ibmiCommand 'CALL PGM(APINTO11/BUILD)'
                         }
                     }
+                /* groovylint-disable-next-line TrailingWhitespace */
                 }
             }
             stage('TEST') {
