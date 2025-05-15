@@ -4,6 +4,17 @@
 pipeline {
     agent any
     stages {
+        stage('Git Checkout') {
+            steps {
+                script {
+                    git branch: 'dev_Project1',
+                        credentialsId: 'iseries-anilpgit-dev-credential',
+                        url: 'https://github.com/anilpgit/iseries_dev.git/'
+
+                    git --no-pager diff origin/$CHANGE_TARGET --name-only
+                }
+            }
+        }
         stage('CRTSAVF') {
             steps {
                 script {
@@ -120,4 +131,4 @@ pipeline {
                 }
             }
 }
-}
+
