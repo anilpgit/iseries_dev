@@ -29,7 +29,7 @@ pipeline {
                 //echo "Branch name: ${branchName}"
                 
                 powershell '& git status'
-
+                powershell '& git diff --name-only '
                 // do the diff and set some variable based on the result
                 powershell '''  
 					$DiffToMaster = & git diff --name-only origin main:refs/remotes/origin/main..origin dev_Project1:refs/remotes/origin/dev_Project1
