@@ -16,7 +16,14 @@ pipeline {
 				
                 // now fetch master so you can do a diff against it 
                 powershell '& git fetch --no-tags'
-				
+				echo    'Fetching master'
+                echo    $env:BRANCH_NAME
+                echo    $env:CHANGE_ID
+                echo    $env:CHANGE_TARGET
+                echo    $env:CHANGE_URL
+                echo    $env:CHANGE_AUTHOR
+                echo    $env:CHANGE_AUTHOR_DISPLAY_NAME
+                
                 // do the diff and set some variable based on the result
                 powershell '''
 					$DiffToMaster = & git diff --name-only origin/master..origin/$env:BRANCH_NAME
