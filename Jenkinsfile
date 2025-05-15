@@ -18,8 +18,8 @@ pipeline {
                 powershell '& git fetch --no-tags'
 				echo    'Fetching master'
                 // get the branch name from the environment variable
-                def branchName = env.BRANCH_NAME
-                echo "Branch name: ${branchName}"
+                //def branchName = env.BRANCH_NAME
+                //echo "Branch name: ${branchName}"
 
                 // do the diff and set some variable based on the result
                 powershell '''
