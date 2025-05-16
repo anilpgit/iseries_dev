@@ -22,8 +22,8 @@ pipeline {
                                 echo "Running on ${env.BUILD_URL}"
                             }
                 }
-        
         }
+        
         stage('CRTSAVF') {
             steps {
                 script {
@@ -55,7 +55,7 @@ pipeline {
                         error result.getPrettyMessages
                     }
                 }
-            
+            }
         }
         stage('SAVEF') {
             steps {
@@ -141,3 +141,4 @@ pipeline {
             }
 }
 }
+
