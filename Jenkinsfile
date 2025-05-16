@@ -19,7 +19,7 @@ pipeline {
                 powershell  '& git config --list'
                 tmpFile="/tmp/jenkinsgitlabrokomarifilechanges.txt"
 
-                # All the files that changed in this build trigger to a temporary file
+                // All the files that changed in this build trigger to a temporary file
                 powershell '& git diff --name-only $GIT_PREVIOUS_COMMIT $GIT_COMMIT > $tmpFile'
 		                    
             }
