@@ -32,7 +32,7 @@ pipeline {
                 //powershell '& git diff --name-only '
                 // do the diff and set some variable based on the result
                 powershell '''  
-					$DiffToMaster = & git diff --name-only origin/dev_Project1..origin/main
+					$DiffToMaster = & git diff --name-only dev_Project1..main
 					Switch ($DiffToMaster) {
 						'server-1607/base.json' {$env:PACK_BASE = $true}
 						'server-1607/basic.json' {$env:PACK_BASIC = $true}
