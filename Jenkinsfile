@@ -17,7 +17,7 @@ pipeline {
                 powershell '& git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main'
 				
                 powershell  '& git config --list'
-                def tmpFile="/tmp/jenkinsgitfilechanges.txt"
+                def tmpFile ='/tmp/jenkinsgitfilechanges.txt'
 
                 // All the files that changed in this build trigger to a temporary file
                 powershell '& git diff --name-only $GIT_PREVIOUS_COMMIT $GIT_COMMIT > $tmpFile'
