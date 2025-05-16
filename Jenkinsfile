@@ -1,35 +1,16 @@
 //Jenkinsfile
+y
 
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
     agent any
     stages {
         stage ("info") {
-            //when {
-		        //changeRequest()
-                //branch pattern: "dev_\\d+", comparator: "REGEXP"
-              //  anyOf { branch 'main'; branch 'dev_Project1' } 
-			//}
-			
-				//when { changeset "subdirectory/*"}
-                        steps {
-                            //powershell '& git diff --name-only main dev_Project1'
-                            script {
-                                echo 'Checking for changes'
-                                def changes = ibmiGetChanges()
-                                if (changes) {
-                                    echo "Changes detected: ${changes}"
-                                    // Proceed with the pipeline
-                                } else {
-                                    echo 'No changes detected. Exiting.'
-                                    currentBuild.result = 'ABORTED'
-                                    error('No changes detected. Exiting.')
-                                }
-                                changes.each { change ->
-                                    echo "Change detected: ${change}"
-                                }
-
-                            }
+            when {
+		        changeRequest()
+               	}
+			    steps {
+                           powershell 'gci env:\\ | ft name,value -autosize'
                 }
         }
         
