@@ -4,22 +4,37 @@ pipeline {
     stages {
         stage('Get Last Commit Details') {
             steps {
-                script{
-
+                script {
                     List<String> changes = getChangedFilesList()
-                    println ("Changed file list: " + changes)
+                    println('Changed file list: ' + changes)
                     List<String> prevchanges = getPreviousChangedFilesList()
-                    println ("Previous Changed file list: " + prevchanges)
+                    println('Previous Changed file list: ' + prevchanges)
                     String gitCommitId = getGitcommitID()
-                    println("GIT CommitID: " + gitCommitID)
+                    println('GIT CommitID: ' + gitCommitID)
 
                     String gitCommitAuthorName = getAuthorName()
-                    println("GIT CommitAuthorName: " + gitCommitAuthorName)
+                    println('GIT CommitAuthorName: ' + gitCommitAuthorName)
 
                     String gitCommitMessage = getCommitMessage()
-                    println("GIT CommitMessage: " + gitCommitMessage)
-
+                    println('GIT CommitMessage: ' + gitCommitMessage)
                 }
+            }
+        }
+        stage('Build') {
+
+            steps {
+                script {
+                    if currentBuild.result == 'SUCCESS' {
+                        echo 'I will always say Hello Success!'
+                    } else {
+                        echo 'I will always say Hello, but I am not successful!'
+                    }
+                }
+            }
+        }
+        post {
+            always {
+                echo 'I will always say Hello again!'
             }
         }
     }
@@ -46,10 +61,10 @@ List<String> getPreviousChangedFilesList() {
     return changedFiles
 }
 @NonCPS
-String getGitcommitID(){
-    gitCommitID = " "
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
+String getGitcommitID() {
+    gitCommitID = ' '
+    for ( changeLogSet in currentBuild.changeSets) {
+        for (entry in changeLogSet.getItems()) {
             gitCommitID = entry.commitId
         }
     }
@@ -57,10 +72,10 @@ String getGitcommitID(){
 }
 
 @NonCPS
-String getAuthorName(){
-    gitAuthorName = " "
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
+String getAuthorName() {
+    gitAuthorName = ' '
+    for ( changeLogSet in currentBuild.changeSets) {
+        for (entry in changeLogSet.getItems()) {
             gitAuthorName = entry.authorName
         }
     }
@@ -68,10 +83,10 @@ String getAuthorName(){
 }
 
 @NonCPS
-String getCommitMessage(){
-    commitMessage = " "
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
+String getCommitMessage() {
+    commitMessage = ' '
+    for ( changeLogSet in currentBuild.changeSets) {
+        for (entry in changeLogSet.getItems()) {
             commitMessage = entry.msg
         }
     }
