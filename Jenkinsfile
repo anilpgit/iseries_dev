@@ -9,7 +9,7 @@ pipeline {
                     List<String> changes = getChangedFilesList()
                     println ("Changed file list: " + changes)
                     List<String> prevchanges = getPreviousChangedFilesList()
-                    println ("Previous Changed file list: " + prevchangeschanges)
+                    println ("Previous Changed file list: " + prevchanges)
                     String gitCommitId = getGitcommitID()
                     println("GIT CommitID: " + gitCommitID)
 
