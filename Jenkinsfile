@@ -17,32 +17,11 @@ pipeline {
                 powershell '& git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main'
 				
                 powershell  '& git config --list'
-                // now fetch master so you can do a diff against it 
-                //powershell '& git fetch --no-tags'
-                powershell '& git add -A'
-                powershell '& git fetch origin main:refs/remotes/origin/main'
-                //powershell '& git fetch origin dev_Project1:refs/remotes/origin/dev_Project1'
+                tmpFile="/tmp/jenkinsgitlabrokomarifilechanges.txt"
 
-				echo    'Fetching main'
-                // get the branch name from the environment variable
-                //def branchName = env.BRANCH_NAME
-                //echo "Branch name: ${branchName}"
-                
-                powershell '& git status'
-                //powershell '& git diff --name-only '
-                // do the diff and set some variable based on the result
-                powershell '''  
-					$DiffToMaster = & git diff --name-only dev_Project1..main
-					Switch ($DiffToMaster) {
-						'server-1607/base.json' {$env:PACK_BASE = $true}
-						'server-1607/basic.json' {$env:PACK_BASIC = $true}
-						'server-1607/algo.json' {$env:PACK_ALGO = $true}
-						'server-1607/build.json' {$env:PACK_BUILD = $true}
-						'server-1607/calc.json' {$env:PACK_CALC = $true}
-					}
-					gci env:/PACK_*
-				'''
-			}
+                # All the files that changed in this build trigger to a temporary file
+                powershell '& git diff --name-only $GIT_PREVIOUS_COMMIT $GIT_COMMIT > $tmpFile'
+		                    
         }
         stage('CRTSAVF') {
             steps {
