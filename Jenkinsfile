@@ -8,7 +8,8 @@ pipeline {
 
                     List<String> changes = getChangedFilesList()
                     println ("Changed file list: " + changes)
-
+                    List<String> prevchanges = getPreviousChangedFilesList()
+                    println ("Previous Changed file list: " + prevchangeschanges)
                     String gitCommitId = getGitcommitID()
                     println("GIT CommitID: " + gitCommitID)
 
@@ -25,16 +26,25 @@ pipeline {
 }
 
 @NonCPS
-List<String> getChangedFilesList(){
+List<String> getChangedFilesList() {
     def changedFiles = []
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
+    for ( changeLogSet in currentBuild.changeSets) {
+        for (entry in changeLogSet.getItems()) {
             changedFiles.addAll(entry.affectedPaths)
         }
     }
     return changedFiles
 }
-
+@NonCPS
+List<String> getPreviousChangedFilesList() {
+    def changedFiles = []
+    for ( changeLogSet in currentBuild.previousBuild.changeSets) {
+        for (entry in changeLogSet.getItems()) {
+            changedFiles.addAll(entry.affectedPaths)
+        }
+    }
+    return changedFiles
+}
 @NonCPS
 String getGitcommitID(){
     gitCommitID = " "
