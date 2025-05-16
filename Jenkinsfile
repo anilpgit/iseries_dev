@@ -13,7 +13,7 @@ pipeline {
 			
 				//when { changeset "subdirectory/*"}
                         steps {
-                            powershell '& git diff --name-only main dev_Project1'
+                            //powershell '& git diff --name-only main dev_Project1'
                             script {
                                 echo 'Checking for changes'
                                 def changes = ibmiGetChanges()
