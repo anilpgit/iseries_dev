@@ -11,7 +11,7 @@ pipeline {
               //  anyOf { branch 'main'; branch 'dev_Project1' } 
 			//}
 			steps {
-				powershell 'gci env:\\ | ft name,value -autosize'
+				//powershell 'gci env:\\ | ft name,value -autosize'
 				
                 // add a ref to git config to make it aware of master
                 powershell '& git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main'
@@ -22,6 +22,7 @@ pipeline {
                 # All the files that changed in this build trigger to a temporary file
                 powershell '& git diff --name-only $GIT_PREVIOUS_COMMIT $GIT_COMMIT > $tmpFile'
 		                    
+            }
         }
         stage('CRTSAVF') {
             steps {
