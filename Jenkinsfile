@@ -13,13 +13,8 @@ pipeline {
 			
 				//when { changeset "subdirectory/*"}
                         steps {
-                                script {
-                                echo 'Running on IBMi'
-                                echo "Running on ${env.JOB_NAME} in ${env.BUILD_URL}"
-                                echo "Running on ${env.WORKSPACE}"
-                                echo "Running on ${env.BUILD_ID}"
-                                echo "Running on ${env.BUILD_NUMBER}"
-                                echo "Running on ${env.BUILD_URL}"
+                            powershell (& git diff --name-only main dev_Project1)
+
                             }
                 }
         }
