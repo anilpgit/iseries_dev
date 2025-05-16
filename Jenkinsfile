@@ -10,6 +10,7 @@ pipeline {
                	}
 			    steps {
                            powershell 'gci env:\\ | ft name,value -autosize'
+                           powershell '& git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master'
                 }
         }
         
