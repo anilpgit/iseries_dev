@@ -1,5 +1,4 @@
 //Jenkinsfile
-y
 
 /* groovylint-disable-next-line CompileStatic */
 pipeline {
