@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Get Last Commit Details') {
+        stage('Get Last Commit Info') {
             steps {
                 script {
                     List<String> changes = getChangedFilesList()
