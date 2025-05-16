@@ -13,7 +13,18 @@ pipeline {
 			
 				//when { changeset "subdirectory/*"}
                         steps {
-                            powershell (& git diff --name-only main dev_Project1)
+                            powershell '& git diff --name-only main dev_Project1'
+                            script {
+                                echo 'Checking for changes'
+                                def changes = ibmiGetChanges()
+                                if (changes) {
+                                    echo "Changes detected: ${changes}"
+                                    // Proceed with the pipeline
+                                } else {
+                                    echo 'No changes detected. Exiting.'
+                                    currentBuild.result = 'ABORTED'
+                                    error('No changes detected. Exiting.')
+                                }
 
                             }
                 }
