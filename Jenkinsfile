@@ -10,19 +10,19 @@ pipeline {
                 //branch pattern: "dev_\\d+", comparator: "REGEXP"
               //  anyOf { branch 'main'; branch 'dev_Project1' } 
 			//}
-			steps {
-				//powershell 'gci env:\\ | ft name,value -autosize'
-				
-                // add a ref to git config to make it aware of master
-                powershell '& git config --add remote.origin.fetch +refs/heads/main:refs/remotes/origin/main'
-				
-                powershell  '& git config --list'
-                def tmpFile ='/tmp/jenkinsgitfilechanges.txt'
-
-                // All the files that changed in this build trigger to a temporary file
-                powershell '& git diff --name-only $GIT_PREVIOUS_COMMIT $GIT_COMMIT > $tmpFile'
-		                    
-            }
+			
+				when { changeset "subdirectory/*"}
+                        steps {
+                                script {
+                                echo 'Running on IBMi'
+                                echo "Running on ${env.JOB_NAME} in ${env.BUILD_URL}"
+                                echo "Running on ${env.WORKSPACE}"
+                                echo "Running on ${env.BUILD_ID}"
+                                echo "Running on ${env.BUILD_NUMBER}"
+                                echo "Running on ${env.BUILD_URL}"
+                            }
+                }
+        
         }
         stage('CRTSAVF') {
             steps {
@@ -55,7 +55,7 @@ pipeline {
                         error result.getPrettyMessages
                     }
                 }
-            }
+            
         }
         stage('SAVEF') {
             steps {
