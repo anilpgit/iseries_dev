@@ -11,7 +11,7 @@ pipeline {
               //  anyOf { branch 'main'; branch 'dev_Project1' } 
 			//}
 			
-				when { changeset "subdirectory/*"}
+				//when { changeset "subdirectory/*"}
                         steps {
                                 script {
                                 echo 'Running on IBMi'
