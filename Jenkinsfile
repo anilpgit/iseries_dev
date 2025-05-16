@@ -25,6 +25,9 @@ pipeline {
                                     currentBuild.result = 'ABORTED'
                                     error('No changes detected. Exiting.')
                                 }
+                                changes.each { change ->
+                                    echo "Change detected: ${change}"
+                                }
 
                             }
                 }
