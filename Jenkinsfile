@@ -35,6 +35,22 @@ List<String> getChangedFilesList() {
         println('Changed after sort file list: ' + changedFiles)
         changedFiles.sort { s1, s2 -> s1.substring(s1.lastIndexOf('.') + 1) <=> s2.substring(s2.lastIndexOf('.') + 1) }
         println('Changed after sort file extension: ' + changedFiles)
+
+        for (entry in changeLogSet.getItems()) {
+            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'DSPF' > 0) {
+                println('DSPF file found : ' + entry.affectedPaths)
+            }
+            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'SQLRPGLE' > 0) {
+                println('SQLRPGLE file found : ' + entry.affectedPaths)
+            }
+            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'SQLRPG' > 0) {
+                println('SQLRPG file found : ' + entry.affectedPaths)
+            }
+            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'RPGLE' > 0) {
+                println('RPGLE file found : ' + entry.affectedPaths)
+            }
+
+        }
     }
     return changedFiles
 }
