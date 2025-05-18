@@ -28,7 +28,8 @@ List<String> getChangedFilesList() {
     def changedFiles = []
     for ( changeLogSet in currentBuild.changeSets) {
         for (entry in changeLogSet.getItems()) {
-            changedFiles.addAll(entry.affectedPaths.)
+            changedFiles.addAll(entry.affectedPaths)
+            println('Changed file list: ' + changedFiles)
             /* groovylint-disable-next-line ComparisonOfTwoConstants */
             if (changedFiles.Last.lastIndexOf('.') + 1 == 'DSPF' > 0) {
                 println('DSPF file found : ' + entry.affectedPaths)
