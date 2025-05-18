@@ -1,3 +1,5 @@
+// File: DAT001.RPGLE
+// Description: Article File
 
       * Status Data Structure
       *

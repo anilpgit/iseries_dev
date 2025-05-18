@@ -43,8 +43,8 @@ List<String> getChangedFilesList() {
             if (entry.affectedPaths.lastIndexOf('.') + 1 == 'SQLRPGLE' > 0) {
                 println('SQLRPGLE file found : ' + entry.affectedPaths)
             }
-            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'SQLRPG' > 0) {
-                println('SQLRPG file found : ' + entry.affectedPaths)
+            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'BND' > 0) {
+                println('BND file found : ' + entry.affectedPaths)
             }
             if (entry.affectedPaths.lastIndexOf('.') + 1 == 'RPGLE' > 0) {
                 println('RPGLE file found : ' + entry.affectedPaths)
