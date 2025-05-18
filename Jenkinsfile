@@ -29,9 +29,13 @@ pipeline {
 List<String> getChangedFilesList() {
     def changedFiles = []
     for ( changeLogSet in currentBuild.changeSets) {
+        
         for (entry in changeLogSet.getItems()) {
             changedFiles.addAll(entry.affectedPaths)
         }
+        println ("Changed before sort file list: " + changedFiles)
+        changedFiles.sort()
+        println ("Changed after sort file list: " + changedFiles)
     }
     return changedFiles
 }
