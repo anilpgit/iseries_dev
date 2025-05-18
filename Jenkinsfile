@@ -28,19 +28,20 @@ List<String> getChangedFilesList() {
     def changedFiles = []
     for ( changeLogSet in currentBuild.changeSets) {
         for (entry in changeLogSet.getItems()) {
-            changedFiles.addAll(entry.affectedPaths)
-            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'DSPF' > 0) {
+            changedFiles.addAll(entry.affectedPaths.)
+            /* groovylint-disable-next-line ComparisonOfTwoConstants */
+            if (changedFiles.Last.lastIndexOf('.') + 1 == 'DSPF' > 0) {
                 println('DSPF file found : ' + entry.affectedPaths)
             }
-            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'SQLRPGLE' > 0) {
+            if (changedFiles.Last.lastIndexOf('.') + 1 == 'SQLRPGLE' > 0) {
                 println('SQLRPGLE file found : ' + entry.affectedPaths)
             }
-            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'BND' > 0) {
+            if (changedFiles.Last.lastIndexOf('.') + 1 == 'BND' > 0) {
                 println('BND file found : ' + entry.affectedPaths)
             }
-            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'RPGLE' > 0) {
+            if (changedFiles.Last.lastIndexOf('.') + 1== 'RPGLE' > 0) {
                 println('RPGLE file found : ' + entry.affectedPaths)
-            }
+            }.
         }
     }
     println('Changed before sort file list: ' + changedFiles)
