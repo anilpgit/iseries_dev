@@ -32,7 +32,9 @@ List<String> getChangedFilesList() {
             println('Changed file list: ' + changedFiles)
             /* groovylint-disable-next-line ComparisonOfTwoConstants */
             for(item in changedFiles) {
-                println('Changed file: ' + item)
+                println('Changed file: ' + item.lastIndexOf('.'))
+                println('Changed file: ' + item.substring(item.lastIndexOf('.')))
+                println('Changed file: ' + item.substring(item.lastIndexOf('.') + 1))
             }
            
         }
