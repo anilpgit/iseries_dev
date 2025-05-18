@@ -4,21 +4,19 @@ pipeline {
     stages {
         stage('Get Last Commit Details') {
             steps {
-                script{
-
+                script {
                     List<String> changes = getChangedFilesList()
-                    println ("Changed file list: " + changes)
+                    println('Changed file list: ' + changes)
                     List<String> prevchanges = getPreviousChangedFilesList()
-                    println ("Previous Changed file list: " + prevchanges)
+                    println('Previous Changed file list: ' + prevchanges)
                     String gitCommitId = getGitcommitID()
-                    println("GIT CommitID: " + gitCommitID)
+                    println('GIT CommitID: ' + gitCommitID)
 
                     String gitCommitAuthorName = getAuthorName()
-                    println("GIT CommitAuthorName: " + gitCommitAuthorName)
+                    println('GIT CommitAuthorName: ' + gitCommitAuthorName)
 
                     String gitCommitMessage = getCommitMessage()
-                    println("GIT CommitMessage: " + gitCommitMessage)
-
+                    println('GIT CommitMessage: ' + gitCommitMessage)
                 }
             }
         }
@@ -29,13 +27,14 @@ pipeline {
 List<String> getChangedFilesList() {
     def changedFiles = []
     for ( changeLogSet in currentBuild.changeSets) {
-        
         for (entry in changeLogSet.getItems()) {
             changedFiles.addAll(entry.affectedPaths)
         }
-        println ("Changed before sort file list: " + changedFiles)
+        println('Changed before sort file list: ' + changedFiles)
         changedFiles.sort()
-        println ("Changed after sort file list: " + changedFiles)
+        println('Changed after sort file list: ' + changedFiles)
+        changedFiles.sort { s1, s2 -> s1.substring(s1.lastIndexOf('.') + 1) <=> s2.substring(s2.lastIndexOf('.') + 1) }
+        println('Changed after sort file extension: ' + changedFiles)
     }
     return changedFiles
 }
@@ -50,10 +49,10 @@ List<String> getPreviousChangedFilesList() {
     return changedFiles
 }
 @NonCPS
-String getGitcommitID(){
-    gitCommitID = " "
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
+String getGitcommitID() {
+    gitCommitID = ' '
+    for ( changeLogSet in currentBuild.changeSets) {
+        for (entry in changeLogSet.getItems()) {
             gitCommitID = entry.commitId
         }
     }
@@ -61,10 +60,10 @@ String getGitcommitID(){
 }
 
 @NonCPS
-String getAuthorName(){
-    gitAuthorName = " "
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
+String getAuthorName() {
+    gitAuthorName = ' '
+    for ( changeLogSet in currentBuild.changeSets) {
+        for (entry in changeLogSet.getItems()) {
             gitAuthorName = entry.authorName
         }
     }
@@ -72,10 +71,10 @@ String getAuthorName(){
 }
 
 @NonCPS
-String getCommitMessage(){
-    commitMessage = " "
-    for ( changeLogSet in currentBuild.changeSets){
-        for (entry in changeLogSet.getItems()){
+String getCommitMessage() {
+    commitMessage = ' '
+    for ( changeLogSet in currentBuild.changeSets) {
+        for (entry in changeLogSet.getItems()) {
             commitMessage = entry.msg
         }
     }
