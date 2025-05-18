@@ -31,18 +31,10 @@ List<String> getChangedFilesList() {
             changedFiles.addAll(entry.affectedPaths)
             println('Changed file list: ' + changedFiles)
             /* groovylint-disable-next-line ComparisonOfTwoConstants */
-            if (changedFiles.Last.lastIndexOf('.') + 1 == 'DSPF' > 0) {
-                println('DSPF file found : ' + entry.affectedPaths)
+            for(item in changedFiles) {
+                println('Changed file: ' + item)
             }
-            if (changedFiles.Last.lastIndexOf('.') + 1 == 'SQLRPGLE' > 0) {
-                println('SQLRPGLE file found : ' + entry.affectedPaths)
-            }
-            if (changedFiles.Last.lastIndexOf('.') + 1 == 'BND' > 0) {
-                println('BND file found : ' + entry.affectedPaths)
-            }
-            if (changedFiles.Last.lastIndexOf('.') + 1== 'RPGLE' > 0) {
-                println('RPGLE file found : ' + entry.affectedPaths)
-            }
+           
         }
     }
     println('Changed before sort file list: ' + changedFiles)
