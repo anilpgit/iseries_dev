@@ -36,7 +36,7 @@ List<String> getChangedFilesList() {
         changedFiles.sort { s1, s2 -> s1.substring(s1.lastIndexOf('.') + 1) <=> s2.substring(s2.lastIndexOf('.') + 1) }
         println('Changed after sort file extension: ' + changedFiles)
 
-        for (entry in changeLogSet.getItems()) {
+        for (entry in currentBuild.changeSets.getItems)
             if (entry.affectedPaths.lastIndexOf('.') + 1 == 'DSPF' > 0) {
                 println('DSPF file found : ' + entry.affectedPaths)
             }
