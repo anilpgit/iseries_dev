@@ -29,6 +29,18 @@ List<String> getChangedFilesList() {
     for ( changeLogSet in currentBuild.changeSets) {
         for (entry in changeLogSet.getItems()) {
             changedFiles.addAll(entry.affectedPaths)
+            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'DSPF' > 0) {
+                println('DSPF file found : ' + entry.affectedPaths)
+            }
+            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'SQLRPGLE' > 0) {
+                println('SQLRPGLE file found : ' + entry.affectedPaths)
+            }
+            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'BND' > 0) {
+                println('BND file found : ' + entry.affectedPaths)
+            }
+            if (entry.affectedPaths.lastIndexOf('.') + 1 == 'RPGLE' > 0) {
+                println('RPGLE file found : ' + entry.affectedPaths)
+            }
         }
     }
     println('Changed before sort file list: ' + changedFiles)
@@ -36,21 +48,6 @@ List<String> getChangedFilesList() {
     println('Changed after sort file list: ' + changedFiles)
     changedFiles.sort { s1, s2 -> s1.substring(s1.lastIndexOf('.') + 1) <=> s2.substring(s2.lastIndexOf('.') + 1) }
     println('Changed after sort file extension: ' + changedFiles)
-
-    for (entry in currentBuild.changeSets.getItems()) {
-        if (entry.affectedPaths.lastIndexOf('.') + 1 == 'DSPF' > 0) {
-            println('DSPF file found : ' + entry.affectedPaths)
-        }
-        if (entry.affectedPaths.lastIndexOf('.') + 1 == 'SQLRPGLE' > 0) {
-            println('SQLRPGLE file found : ' + entry.affectedPaths)
-        }
-        if (entry.affectedPaths.lastIndexOf('.') + 1 == 'BND' > 0) {
-            println('BND file found : ' + entry.affectedPaths)
-        }
-        if (entry.affectedPaths.lastIndexOf('.') + 1 == 'RPGLE' > 0) {
-            println('RPGLE file found : ' + entry.affectedPaths)
-        }
-    }
 
     return changedFiles
 }
