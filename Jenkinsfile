@@ -42,7 +42,7 @@ List<String> getChangedFilesList() {
             }
             if (changedFiles.Last.lastIndexOf('.') + 1== 'RPGLE' > 0) {
                 println('RPGLE file found : ' + entry.affectedPaths)
-            }.
+            }
         }
     }
     println('Changed before sort file list: ' + changedFiles)
