@@ -1,5 +1,5 @@
     // Source file: QRPGLESRC
-    // Source member: ART301.SQLRPGLE
+    // Source member: ART301.SQLRPGLE new
      h nomain
 
      Fart301d   CF   E             WORKSTN

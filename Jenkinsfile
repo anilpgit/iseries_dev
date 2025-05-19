@@ -29,6 +29,7 @@ List<String> getChangedFilesList() {
     for ( changeLogSet in currentBuild.changeSets) {
         for (entry in changeLogSet.getItems()) {
             changedFiles.addAll(entry.affectedPaths)
+            println('Changed before sort file extension: ' + changedFiles)
             changedFiles.sort { s1, s2 -> s1.substring(s1.lastIndexOf('.') + 1) <=> s2.substring(s2.lastIndexOf('.') + 1) }
              println('Changed after sort file extension: ' + changedFiles)
             /* groovylint-disable-next-line ComparisonOfTwoConstants */
@@ -45,6 +46,9 @@ List<String> getChangedFilesList() {
                 }
                 if (item.substring(item.lastIndexOf('.') + 1) == 'DSPF') {
                     println('Do DSPF Stuff  ' + item)
+                }
+                 if (item.substring(item.lastIndexOf('.') + 1) == 'TABLE') {
+                    println('Do TABLE Stuff  ' + item)
                 }
             }
         }
