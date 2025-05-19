@@ -35,8 +35,15 @@ List<String> getChangedFilesList() {
                 println('Changed file: ' + item.lastIndexOf('.'))
                 println('Changed file: ' + item.substring(item.lastIndexOf('.')))
                 println('Changed file: ' + item.substring(item.lastIndexOf('.') + 1))
-            }
-           
+                if(item.substring(item.lastIndexOf('.') + 1) == 'BND') {
+                    println('Do BND Stuff  ' + item)
+                if(item.substring(item.lastIndexOf('.') + 1) == 'RPGLE') {
+                    println('Do RPGLE Stuff  ' + item)
+                if(item.substring(item.lastIndexOf('.') + 1) == 'SQLRPGLE') {
+                    println('Do SQLRPGLE Stuff  ' + item)
+                if(item.substring(item.lastIndexOf('.') + 1) == 'DSPF') {
+                    println('Do DSPF Stuff  ' + item)
+
         }
     }
     println('Changed before sort file list: ' + changedFiles)

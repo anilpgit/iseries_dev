@@ -1,5 +1,6 @@
      A*%%TS  SD  20161129  155718  VTAQUIN     REL-V7R1M0  5770-WDS
      A*%%EC
+          // DSPF   
      A                                      DSPSIZ(24 80 *DS3)
      A                                      REF(*LIBL/ARTICLE)
      A                                      INDARA
