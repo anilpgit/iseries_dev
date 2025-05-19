@@ -48,8 +48,10 @@ List<String> getChangedFilesList() {
                     println('Do DSPF Stuff  ' + item)
                 }
 
+            }
         }
     }
+}
     println('Changed before sort file list: ' + changedFiles)
     changedFiles.sort()
     println('Changed after sort file list: ' + changedFiles)
@@ -100,3 +102,4 @@ String getCommitMessage() {
     }
     return commitMessage
 }
+
