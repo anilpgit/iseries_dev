@@ -29,35 +29,30 @@ List<String> getChangedFilesList() {
     for ( changeLogSet in currentBuild.changeSets) {
         for (entry in changeLogSet.getItems()) {
             changedFiles.addAll(entry.affectedPaths)
-            println('Changed file list: ' + changedFiles)
+            changedFiles.sort { s1, s2 -> s1.substring(s1.lastIndexOf('.') + 1) <=> s2.substring(s2.lastIndexOf('.') + 1) }
+             println('Changed after sort file extension: ' + changedFiles)
             /* groovylint-disable-next-line ComparisonOfTwoConstants */
-            for(item in changedFiles) {
+            for (item in changedFiles) {
                 println('Changed file: ' + item.lastIndexOf('.'))
                 println('Changed file: ' + item.substring(item.lastIndexOf('.')))
                 println('Changed file: ' + item.substring(item.lastIndexOf('.') + 1))
-                if(item.substring(item.lastIndexOf('.') + 1) == 'BND') {
+                if (item.substring(item.lastIndexOf('.') + 1) == 'BND') {
                     println('Do BND Stuff  ' + item)
                 }
-                if(item.substring(item.lastIndexOf('.') + 1) == 'RPGLE') {
+                if (item.substring(item.lastIndexOf('.') + 1) == 'RPGLE') {
                     println('Do RPGLE Stuff  ' + item)
                 }
-                if(item.substring(item.lastIndexOf('.') + 1) == 'SQLRPGLE') {
+                if (item.substring(item.lastIndexOf('.') + 1) == 'SQLRPGLE') {
                     println('Do SQLRPGLE Stuff  ' + item)
                 }
-                if(item.substring(item.lastIndexOf('.') + 1) == 'DSPF') {
+                if (item.substring(item.lastIndexOf('.') + 1) == 'DSPF') {
                     println('Do DSPF Stuff  ' + item)
                 }
-
             }
         }
     }
-}
-    println('Changed before sort file list: ' + changedFiles)
-    changedFiles.sort()
-    println('Changed after sort file list: ' + changedFiles)
-    changedFiles.sort { s1, s2 -> s1.substring(s1.lastIndexOf('.') + 1) <=> s2.substring(s2.lastIndexOf('.') + 1) }
-    println('Changed after sort file extension: ' + changedFiles)
 
+    
     return changedFiles
 }
 @NonCPS
