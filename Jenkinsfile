@@ -33,9 +33,7 @@ List<String> getChangedFilesList() {
              println('Changed after sort file extension: ' + changedFiles)
             /* groovylint-disable-next-line ComparisonOfTwoConstants */
             for (item in changedFiles) {
-                println('Changed file: ' + item.lastIndexOf('.'))
-                println('Changed file: ' + item.substring(item.lastIndexOf('.')))
-                println('Changed file: ' + item.substring(item.lastIndexOf('.') + 1))
+                
                 if (item.substring(item.lastIndexOf('.') + 1) == 'BND') {
                     println('Do BND Stuff  ' + item)
                 }
