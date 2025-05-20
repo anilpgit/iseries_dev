@@ -51,7 +51,7 @@ List<String> getChangedFilesList() {
                         //Example below where /QOpenSys/bin/script.sh is any PASE shell command or script.
                         //ibmCommand "QSH CMD('/QOpenSys/usr/bin/sh -c "/QOpenSys/bin/script.sh"')"
 
-                        ibmCommand "QSH CMD('/QOpenSys/usr/bin/sh -c /QOpenSys/pkgs/bin/makei c -f {' + item +}')" 
+                        ibmCommand "QSH CMD('/QOpenSys/usr/bin/sh -c "/QOpenSys/pkgs/bin/makei c -f {filename}" ')" 
                         //Example of running a shell script
                         //Some pipeline steps running on PUB400
                         ibmiCommand "SNDMSG MSG('Hello from Jenkins') TOUSR(ESPENGLER)"
