@@ -31,10 +31,9 @@ List<String> getChangedFilesList() {
             changedFiles.addAll(entry.affectedPaths)
             println('Changed before sort file extension: ' + changedFiles)
             changedFiles.sort { s1, s2 -> s1.substring(s1.lastIndexOf('.') + 1) <=> s2.substring(s2.lastIndexOf('.') + 1) }
-             println('Changed after sort file extension: ' + changedFiles)
+            println('Changed after sort file extension: ' + changedFiles)
             /* groovylint-disable-next-line ComparisonOfTwoConstants */
             for (item in changedFiles) {
-                
                 if (item.substring(item.lastIndexOf('.') + 1) == 'BND') {
                     println('Do BND Stuff  ' + item)
                 }
@@ -46,15 +45,25 @@ List<String> getChangedFilesList() {
                 }
                 if (item.substring(item.lastIndexOf('.') + 1) == 'DSPF') {
                     println('Do DSPF Stuff  ' + item)
+                    onIBMi('PUB400') {
+                        print "Command job is ${env.IBMI_COMMAND_JOB}"
+                        print "Current CCSID is ${env.IBMI_PROFILE}"
+                        //Example below where /QOpenSys/bin/script.sh is any PASE shell command or script.
+                        //ibmCommand "QSH CMD('/QOpenSys/usr/bin/sh -c "/QOpenSys/bin/script.sh"')"
+
+                        ibmCommand "QSH CMD('/QOpenSys/usr/bin/sh -c /QOpenSys/pkgs/bin/makei c -f {' + item +}')" 
+                        //Example of running a shell script
+                        //Some pipeline steps running on PUB400
+                        ibmiCommand "SNDMSG MSG('Hello from Jenkins') TOUSR(ESPENGLER)"
+                    }
                 }
-                 if (item.substring(item.lastIndexOf('.') + 1) == 'TABLE') {
+                if (item.substring(item.lastIndexOf('.') + 1) == 'TABLE') {
                     println('Do TABLE Stuff  ' + item)
                 }
             }
         }
     }
 
-    
     return changedFiles
 }
 @NonCPS
@@ -99,4 +108,3 @@ String getCommitMessage() {
     }
     return commitMessage
 }
-
