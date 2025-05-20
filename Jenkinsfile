@@ -50,7 +50,7 @@ List<String> getChangedFilesList() {
                         print "Current CCSID is ${env.IBMI_PROFILE}"
                         //Example below where /QOpenSys/bin/script.sh is any PASE shell command or script.
                         //ibmCommand "QSH CMD('/QOpenSys/usr/bin/sh -c "/QOpenSys/bin/script.sh"')"
-                        ibmCommand "QSH CMD('export PATH=$PATH:/QOpenSys/usr/bin:/QOpenSys/pkgs/bin:')" ')"
+                        ibmCommand "QSH CMD('export PATH=$PATH:/QOpenSys/usr/bin:/QOpenSys/pkgs/bin:')" 
                         ibmCommand "QSH CMD('/QOpenSys/usr/bin/sh -c "/QOpenSys/pkgs/bin/makei c -f {/home/Apinto1/builds/iseries_dev/QDDSSRC/ART200.DSPF}" ')" 
                         //Example of running a shell script
                         //Some pipeline steps running on PUB400
