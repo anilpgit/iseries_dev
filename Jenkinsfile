@@ -32,7 +32,8 @@ pipeline {
                         //ibmCommand "QSH CMD('/QOpenSys/usr/bin/sh -c "/QOpenSys/bin/script.sh"')"
                         //ibmCommand "QSH CMD('export PATH=$PATH:/QOpenSys/usr/bin:/QOpenSys/pkgs/bin:')"
                         /* groovylint-disable-next-line LineLength */
-                        //ibmiCommand "QSH CMD('export PATH=/QOpenSys/usr/bin:/QOpenSys/pkgs/bin:/QOpenSys/pkgs/bin/make:/QOpenSys/pkgs/bin/makei:/QOpenSys/usr/local/bin:/QOpenSys/usr/local/sbin:')"
+                        ibmiCommand "QSH CMD('export PATH=/QOpenSys/pkgs/bin:$PATH')"
+                        ibmiCommand "QSH CMS('echo $PATH')"
                         ibmiCommand "QSH CMD('/QOpenSys/pkgs/bin/makei c -f /home/APINTO1/builds/iseries_dev-1/QDDSSRC/ART200D-Work_with_Article.DSPF')"
                         //Example of running a shell script
                         //Some pipeline steps running on PUB400
