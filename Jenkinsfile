@@ -18,6 +18,12 @@ pipeline {
                     String gitCommitMessage = getCommitMessage()
                     println('GIT CommitMessage: ' + gitCommitMessage)
 
+                }
+            }
+        }
+        stage('Build') {
+            steps {
+                script {
                     onIBMi('PUB400') {
                         print "Command job is ${env.IBMI_COMMAND_JOB}"
                         print "Current CCSID is ${env.IBMI_PROFILE}"
