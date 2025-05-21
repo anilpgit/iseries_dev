@@ -17,7 +17,6 @@ pipeline {
 
                     String gitCommitMessage = getCommitMessage()
                     println('GIT CommitMessage: ' + gitCommitMessage)
-
                 }
             }
         }
@@ -32,6 +31,7 @@ pipeline {
                         //ibmCommand "QSH CMD('/QOpenSys/usr/bin/sh -c "/QOpenSys/bin/script.sh"')"
                         //ibmCommand "QSH CMD('export PATH=$PATH:/QOpenSys/usr/bin:/QOpenSys/pkgs/bin:')"
                         /* groovylint-disable-next-line LineLength */
+                        ibmiCommand "QSH CMD('export PATH=$PATH:/QOpenSys/usr/bin:/QOpenSys/pkgs/bin:/QOpenSys/pkgs/bin/make:/QOpenSys/pkgs/bin/makei:/QOpenSys/usr/local/bin:/QOpenSys/usr/local/sbin:')"
                         ibmiCommand "QSH CMD('/QOpenSys/pkgs/bin/makei c -f /home/Apinto1/builds/iseries_dev/QDDSSRC/ART200D.DSPF')"
                         //Example of running a shell script
                         //Some pipeline steps running on PUB400
