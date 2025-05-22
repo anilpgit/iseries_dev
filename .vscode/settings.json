@@ -1,3 +1,4 @@
 {
+    "cmake.options.statusBarVisibility": "visible",
     "ibm-i-acs.host": ""
 }
