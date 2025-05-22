@@ -34,6 +34,7 @@ pipeline {
                         /* groovylint-disable-next-line LineLength */
                         //ibmiCommand "QSH CMD('export PATH=/QOpenSys/pkgs/bin:')"
                         //ibmiCommand "QSH CMD('echo $PATH')"
+                        ibmiCommand "SBMJOB CMD(STRQSH CMD('/QOpenSys/pkgs/bin/bash -c /QIBM/ProdData/IBMiDebugService/bin/startDebugService.sh')) JOB(DBGSVCE) JOBQ(QSYS/QUSRNOMAX) JOBD(QSYS/QSYSJOBD) USER(*CURRENT)"
                         ibmiCommand "QSH CMD('/QOpenSys/pkgs/bin/makei c -f /home/APINTO1/builds/iseries_dev-1/QDDSSRC/ART200D-Work_with_Article.DSPF')"
                         //Example of running a shell script
                         //Some pipeline steps running on PUB400
