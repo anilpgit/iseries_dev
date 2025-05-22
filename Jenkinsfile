@@ -35,7 +35,7 @@ pipeline {
                         //ibmiCommand "QSH CMD('export PATH=/QOpenSys/pkgs/bin:')"
                         //ibmiCommand "QSH CMD('echo $PATH')"
                         //ibmiCommand "SBMJOB CMD(STRQSH CMD('/QOpenSys/pkgs/bin/bash -c /QIBM/ProdData/IBMiDebugService/bin/startDebugService.sh')) JOB(DBGSVCE) JOBQ(QSYS/QUSRNOMAX) JOBD(QSYS/QSYSJOBD) USER(*CURRENT)"
-                        ibmiCommand "STRQSH CMD('export PATH=$PATH:/QOpenSys/pkgs/bin:/QOpenSys/usr/bin:')"
+                        ibmiCommand "STRQSH CMD('export PATH=/QOpenSys/pkgs/bin:/QOpenSys/usr/bin:')"
                         ibmiCommand "STRQSH CMD('/QOpenSys/pkgs/bin/makei c -f /home/APINTO1/builds/iseries_data_ser/QRPGLESRC/XML_SAX.PGM.RPGLE')"
                         //Example of running a shell script
                         //Some pipeline steps running on PUB400
