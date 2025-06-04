@@ -1,4 +1,4 @@
-
+      // Source file: QRPGLESRC  For test   
      h dftactgrp(*no) bnddir('SAMPLE')
 
      fcustome1  if   e           k disk
