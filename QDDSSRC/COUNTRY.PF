@@ -2,7 +2,7 @@
                                             REF(SAMREF)
                 R FCOUN
                   COID      R
-                  COUNTR    R
+                  COUNTR        20A
                   COISO          3
                   COISO5         3
                   COISO1         3

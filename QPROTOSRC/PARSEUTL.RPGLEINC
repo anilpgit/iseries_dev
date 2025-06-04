@@ -1,0 +1,21 @@
+**Free
+dcl-f COUNTRY keyed usage(*input:*output:*update);
+dcl-ds COUNTRYDS likerec(FCOUN);
+// =============================================
+// Parse COUNTRY XML-INTO
+// =============================================
+dcl-pr  ParseCountryIntoDS likeds(COUNTRYDS);
+  XmlPath char(100) options(*varsize);  
+end-pr;
+//==========================================
+// Parse COUNTRY XML-SAX
+//=============================================
+dcl-pr  ParseCountryIntoSAX likeds(COUNTRYDS);
+  XmlPath char(100) options(*varsize);  
+end-pr;
+//=============================================
+// Parse COUNTRY DATA-INTO
+//=============================================
+dcl-pr  ParseCountryIntoData likeds(COUNTRYDS);
+  XmlPath char(100) options(*varsize);  
+end-pr;

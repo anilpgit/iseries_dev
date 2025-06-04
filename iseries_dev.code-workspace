@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "iseries_dev-1",
+			"path": "../iseries_dev-1"
+		}
+	],
+	"settings": {
+		"ibm-i-acs.host": ""
+	}
+}

@@ -1,0 +1,8 @@
+    PGM 
+    DCL VAR(&CMD) TYPE(*CHAR) LEN(100)
+    DCL VAR(&CMD2) TYPE(*CHAR) LEN(100)     
+    CHGVAR VAR(&CMD) VALUE('ls -l /QOpenSys/var/log')
+    QSH CMD(&CMD)
+    CHGVAR VAR(&CMD2) VALUE('find /Qsys.lib/apinto11.lib/ART* -print /qsys.lib/apinto11.lib/ART.FILE')
+    QSH CMD(&CMD2)
+    ENDPGM
